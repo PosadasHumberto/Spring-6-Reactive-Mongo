@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class CustomerDTO {
 
-    private Integer id;
+    private String id;
 
     @Size(min = 3, max = 255)
     private String customerName;
