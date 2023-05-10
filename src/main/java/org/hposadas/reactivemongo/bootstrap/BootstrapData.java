@@ -2,7 +2,9 @@ package org.hposadas.reactivemongo.bootstrap;
 
 import lombok.RequiredArgsConstructor;
 import org.hposadas.reactivemongo.domain.Beer;
+import org.hposadas.reactivemongo.domain.Customer;
 import org.hposadas.reactivemongo.repositories.BeerRepository;
+import org.hposadas.reactivemongo.repositories.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 public class BootstrapData implements CommandLineRunner {
 
     private final BeerRepository beerRepository;
+    private final CustomerRepository customerRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -21,6 +24,30 @@ public class BootstrapData implements CommandLineRunner {
                 .doOnSuccess(success -> {
                     loadBeerData();
                 }).subscribe();
+        customerRepository.deleteAll()
+                .doOnSuccess(success -> loadCustomerData()).subscribe();
+    }
+
+    private void loadCustomerData() {
+        customerRepository.count().subscribe(count -> {
+            if (count==0) {
+                Customer c1 = Customer.builder()
+                        .customerName("Customer 1")
+                        .build();
+
+                Customer c2 = Customer.builder()
+                        .customerName("Customer 2")
+                        .build();
+
+                Customer c3 = Customer.builder()
+                        .customerName("Customer 3")
+                        .build();
+
+                customerRepository.save(c1).subscribe();
+                customerRepository.save(c2).subscribe();
+                customerRepository.save(c3).subscribe();
+            }
+        });
     }
 
     private void loadBeerData() {

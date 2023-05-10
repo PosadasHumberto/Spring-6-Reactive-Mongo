@@ -57,7 +57,7 @@ public class BeerServiceImplTest {
 
     @Test
     @DisplayName("Test Save Beer Using Subscriber")
-    void name() {
+    void testSaveBeerUsingSubscriber() {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<BeerDTO> atomicDto = new AtomicReference<>();
 
